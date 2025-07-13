@@ -43,8 +43,7 @@ Checkout Page
 ![checkout](https://github.com/user-attachments/assets/2eed436a-44ad-40f2-845c-601c186f1773)
 
 
-Group Picture
-![alt text](<WhatsApp Image 2025-01-20 at 18.22.02_9507ff55.jpg>)
+
 
 
 Contributors ;
