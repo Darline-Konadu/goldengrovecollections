@@ -1,0 +1,79 @@
+<!-- Modal for order details -->
+
+{% for order in order_history %}
+<div class="modal fade" id="orderDetailsModal_{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModal_{{ order.id }}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailsModal_{{ order.id }}Label">Order Details - {{order.order_id}}</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body" id="orderDetailsModal_{{ order.id }}Body">
+               <div class="row">
+                   <div class="col-lg-6 col-md-12 mb-3 mb-lg-3">
+                       <div class="card">
+                           <div class="card-body">
+                               <h5 class="card-title">Order Details</h5>
+                               <p class="card-text">
+                                   <b>Order ID:</b> {{ order.order_id }}<br>
+                                   <b>Full Name:</b> {{ order.user.get_full_name }}<br>
+                                   <b>Amount:</b> GHC {{ order.total_price }}<br>
+                                   <b>Status:</b>
+                                   <span class="badge badge-{% if order.status == 'Pending' %}warning{% elif order.status == 'Processing' %}info{% elif order.status == 'Approved' %}success{% elif order.status == 'Shipped' %}primary{% elif order.status == 'Delivered' %}success{% elif order.status == 'Returned' %}danger{% elif order.status == 'Cancelled' %}secondary{% else %}danger{% endif %}">{{ order.status }}</span><br>
+                                   <b>Payment Mode:</b> {{ order.payment_method }}<br>
+                                   {% if order.address_infos %}
+                                   <b>Mobile:</b> {{ order.address_infos.first.phone_number }}<br>
+                                   {% endif %}
+                                   <b>Date Ordered:</b> {{ order.created_at | date:"d M Y" }}
+                               </p>
+                           </div>
+                       </div>
+                   </div>
+                   {% if order.payment_method == "Online" %}
+                   <div class="col-lg-6 col-md-12 mb-3 mb-lg-3">
+                       <div class="card">
+                           <div class="card-body">
+                               <h5 class="card-title">Payment Details</h5>
+                               <p class="card-text">
+                                   <b>Transaction ID:</b>
+                                   <a href="#" class="text-primary">{{ order.payments.first.transaction_id }}</a><br>
+                                   <b>Payment Status:</b>
+                                   <span class="badge badge-{% if order.payments.first.payment_status == 'Pending' %}warning{% elif order.payments.first.payment_status == 'Paid' %}success{% else %}danger{% endif %}">{{ order.get_payment_status_display }}</span>
+                               </p>
+                           </div>
+                       </div>
+                   </div>
+                   {% endif %}
+                  {% if order.address_infos.exists %}
+                      <div class="col-lg-6 col-md-12 mb-3 mb-lg-3">
+                          <div class="card">
+                              <div class="card-body">
+                                  <h5 class="card-title">Delivery Address</h5>
+                                  <p class="card-text">
+                                      {{ order.address_infos.first.first_name }} {{ order.address_infos.first.last_name }}<br>
+                                      {{ order.address_infos.first.address_1 }}<br>
+                                      {% if order.address_infos.first.address_2 %}
+                                      {{ order.address_infos.first.address_2 }}<br>
+                                      {% endif %}
+                                      {{ order.address_infos.first.town_city }}, {{ order.address_infos.first.region.name }}<br>
+                                      {{ order.address_infos.first.country }}<br>
+                                      {{ order.address_infos.first.phone_number }}
+                                  </p>
+                              </div>
+                          </div>
+                  </div>
+                  {% endif %}
+               </div>
+           </div>
+            <div class="modal-footer">
+                {% if order.payments.exists and order.get_payment_status_display != "Paid" and order.payment_method == "Online" %}
+                    <a href="#" class="btn btn-sm btn-success">Pay Now</a>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

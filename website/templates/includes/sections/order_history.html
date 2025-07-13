@@ -1,0 +1,67 @@
+{% load static %}
+{% if order_history %}
+    {% for order in order_history %}
+    <div class="ord_list_wrap border mb-4 mfliud">
+        <div class="ord_list_head gray d-flex align-items-center justify-content-between px-3 py-3">
+            <div class="olh_flex">
+                <p class="m-0 p-0"><span class="text-muted">Order Number</span></p>
+                <h6 class="mb-0 ft-medium">{{ order.order_id }}</h6>
+            </div>
+            <div class="olh_flex">
+                <p class="mb-1 p-0"><span class="text-muted">Status</span></p>
+                <div class="delv_status">
+                    <span class="ft-medium small text-{% if order.status == 'Pending' %}warning{% elif order.status == 'Processing' %}info{% elif order.status == 'Approved' %}success{% elif order.status == 'Shipped' %}primary{% elif order.status == 'Delivered' %}success{% elif order.status == 'Returned' %}danger{% elif order.status == 'Cancelled' %}danger{% else %}dark{% endif %} bg-light-{% if order.status == 'Pending' %}warning{% elif order.status == 'Processing' %}info{% elif order.status == 'Approved' %}success{% elif order.status == 'Shipped' %}primary{% elif order.status == 'Delivered' %}success{% elif order.status == 'Returned' %}danger{% elif order.status == 'Cancelled' %}danger{% else %}dark{% endif %} rounded px-3 py-1">{{ order.status }}</span>
+                </div>
+            </div>
+            <div class="olh_flex">
+                <button class="btn btn-sm btn-secondary" data-order-id="{{ order.id }}" data-toggle="modal" data-target="#orderDetailsModal_{{ order.id }}">View</button>
+            </div>
+        </div>
+        <div class="ord_list_body text-left">
+            {% for item in order.get_order_items %}
+            <div class="row align-items-center justify-content-center m-0 py-4 br-bottom">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-12">
+                    <div class="cart_single d-flex align-items-start mfliud-bot">
+                        <div class="cart_selected_single_thumb">
+                            <a href="#"><img src="{{ item.product.image.url }}" width="75" class="img-fluid rounded" alt="{{ item.product.name }}"></a>
+                        </div>
+                        <div class="cart_single_caption pl-3">
+                            <p class="mb-0"><span class="text-muted small">{{ item.product.category.name }}</span></p>
+                            <h4 class="product_title fs-sm ft-medium mb-1 lh-1">{{ item.product.name }}</h4>
+                            <p class="mb-2"><span class="text-dark medium">Size: {{ item.product.size }}</span>, <span class="text-dark medium">Color: {{ item.product.color }}</span></p>
+                            <h4 class="fs-sm ft-bold mb-0 lh-1">GHC {{ item.product.get_price }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-6">
+                    <p class="mb-1 p-0"><span class="text-muted">Quantity</span></p>
+                    <h4 class="fs-sm ft-bold mb-0 lh-1">{{ item.quantity }}</h4>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+                    <p class="mb-1 p-0"><span class="text-muted">Subtotal:</span></p>
+                    <h6 class="mb-0 ft-medium fs-sm">{{ item.get_total }}</h6>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="ord_list_footer d-flex align-items-center justify-content-between br-top px-3">
+            <div class="col-xl-3 col-lg-3 col-md-4 olf_flex text-left px-0 py-2 br-right">
+                {% if order.status == 'Pending' %}
+                <a href="#" class="ft-medium fs-sm"><i class="ti-close mr-2"></i>Cancel Order</a>
+                {% endif %}
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-8 pr-0 py-2 olf_flex d-flex align-items-center justify-content-between">
+                <div class="olf_flex_inner hide_mob">
+                    <p class="m-0 p-0"><span class="text-muted medium">Paid using {{ order.payment_method }}</span></p>
+                </div>
+                <div class="olf_inner_right">
+                    <h5 class="mb-0 fs-sm ft-bold">Total: {{ order.total_price }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% include 'includes/modals/order_detail.html' %}
+{% else %}
+    <p>No order history available.</p>
+{% endif %}

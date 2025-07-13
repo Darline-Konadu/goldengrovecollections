@@ -1,0 +1,71 @@
+
+{% extends "base/base.html" %}
+{% block title %}About Us{% endblock title %}
+{% load static %}
+{% block content %}
+<!-- ======================= Top Breadcrubms ======================== -->
+<div class="gray py-3">
+    <div class="container">
+        <div class="row">
+            <div class="colxl-12 col-lg-12 col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'website:home' %}">Home</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======================= Top Breadcrubms ======================== -->
+
+<!-- ======================= About Us Detail ======================== -->
+<section class="middle">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="abt_caption">
+                    <h2 class="ft-medium mb-4">We Have Everything You Need ?</h2>
+                    <p class="mb-4">Golden Grove Collections, established in December 2024, is a prestigious fashion brand that embodies elegance, sophistication, and timeless style. With a commitment to impeccable craftsmanship and attention to detail, Golden Grove Collections offers luxurious garments that exude refinement and exclusivity.</p>
+                    <p class="mb-4">Since its inception, Golden Grove Collections has quickly garnered attention for its exquisite designs, exquisite fabrics, and impeccable tailoring. Each piece is meticulously crafted to perfection, reflecting the brand's dedication to creating garments that stand the test of time.</p>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="abt_caption">
+                    <img src="{% static 'website/assets/img/about-1.png' %}" class="img-fluid rounded" alt="" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ======================= About Us End ======================== -->
+
+<!-- ======================= About Us Detail ======================== -->
+<section class="middle">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="abt_caption">
+                    <img src="{% static 'website/assets/img/about-2.png' %}" class="img-fluid rounded" alt="" />
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="abt_caption">
+                    <h2 class="ft-medium mb-4">Know More About Us</h2>
+                    <p class="mb-4">With a focus on combining traditional craftsmanship with contemporary aesthetics, Golden Grove Collections caters to individuals who appreciate the finer things in life. From impeccably tailored suits to stunning evening gowns, every creation from Golden Grove Collections is a masterpiece of artistry and sophistication.</p>
+                    <p class="mb-4">As a prestigious fashion brand, Golden Grove Collections continues to set the standard for luxury and elegance in the fashion industry. With a growing clientele of discerning fashion connoisseurs, Golden Grove Collections is poised to leave a lasting legacy of exquisite craftsmanship and timeless style.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ======================= About Us End ======================== -->
+{% endblock content %}

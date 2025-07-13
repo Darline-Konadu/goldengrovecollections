@@ -1,0 +1,110 @@
+<!-- Log In Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginmodal" aria-hidden="true">
+    <div class="modal-dialog modal-xl login-pop-form" role="document">
+        <div class="modal-content" id="loginmodal">
+            <div class="modal-headers">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ti-close"></span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <div class="text-center mb-4">
+                    <h2 class="m-0 ft-regular" id="modal-title">Login or Register</h2>
+                </div>
+
+                <ul class="nav nav-tabs" id="loginRegisterTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login-form" role="tab" aria-controls="login-form" aria-selected="true">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register-form" role="tab" aria-controls="register-form" aria-selected="false">Register</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="loginRegisterContent">
+                    <div class="tab-pane fade show active" id="login-form" role="tabpanel" aria-labelledby="login-tab">
+                        <form action="{% url 'accounts:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mt-3">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="Email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="flex-1">
+                                        <input id="dd" class="checkbox-custom" name="dd" type="checkbox">
+                                        <label for="dd" class="checkbox-custom-label">Remember Me</label>
+                                    </div>
+                                    <div class="eltio_k2">
+                                        <a href="#">Forgot Password?</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-md full-width bg-dark text-light fs-md ft-medium">Login</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="register-form" role="tabpanel" aria-labelledby="register-tab">
+                        <form action="{% url 'accounts:register' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mt-3">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" name="fname" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" name="lname" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="Email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="phone" class="form-control" placeholder="Phone Number" name="phone_number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender </label>
+                                <ul class="no-ul-list">
+                                    <li>
+                                        <input id="c1" class="radio-custom" name="gender" type="radio" value="Male">
+                                        <label for="c1" class="radio-custom-label">Male</label>
+                                    </li>
+                                    <li>
+                                        <input id="c2" class="radio-custom" name="gender" type="radio" value="Female">
+                                        <label for="c2" class="radio-custom-label">Female</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-md full-width bg-dark text-light fs-md ft-medium">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

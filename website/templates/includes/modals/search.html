@@ -1,0 +1,28 @@
+<!-- Search -->
+<div class="w3-ch-sideBar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="Search">
+    <div class="rightMenu-scroll">
+        <div class="d-flex align-items-center justify-content-between slide-head py-3 px-3">
+            <h4 class="cart_heading fs-md ft-medium mb-0">Search Products</h4>
+            <button onclick="closeSearch()" class="close_slide"><i class="ti-close"></i></button>
+        </div>
+
+        <div class="cart_action px-3 py-4">
+            <form class="form m-0 p-0" action="{% url 'website:search' %}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Keyword.." name="keyword" required>
+                </div>
+
+                <div class="form-group">
+                    <select class="custom-select" name="category">
+                          <option value="" selected="">Choose Category</option>
+                          {% for category in categories %}
+                          <option value="{{category.id}}">{{category.name}}' collection</option>
+                          {% endfor %}     
+                    </select>
+                </div>
+                <div class="form-group mb-0">
+                    <button type="submit" class="btn d-block full-width btn-dark">Search Product</button>
+                </div>
+            </form>
+    </div>
+</div>

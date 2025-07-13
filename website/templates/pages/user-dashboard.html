@@ -1,0 +1,90 @@
+{% extends "base/base.html" %}
+{% block title %}User Dashboard{% endblock title %}
+{% load static %}
+{% block content %}
+<!-- ======================= Dashboard Detail ======================== -->
+<section class="middle">
+    <div class="container">
+        <div class="row align-items-start justify-content-between">
+
+            <div class="col-12 col-md-12 col-lg-4 col-xl-4 text-center miliods">
+                <div class="d-block border rounded">
+                    <div class="dashboard_author px-2 py-5">
+                        <div class="dash_auth_thumb circle p-1 border d-inline-flex mx-auto mb-2">
+                            <img src="{% if request.user.gender == 'Male' %}{% static 'profile_male.png' %}{% else %}{% static 'profile_female.png' %}{% endif %}" class="img-fluid circle" width="100" alt="Profile Picture" />
+                        </div>
+                        <div class="dash_caption">
+                            <h4 class="fs-md ft-medium mb-0 lh-1">{{request.user.get_full_name}}</h4>
+                            <span class="text-muted smalls">{% if request.user.is_customer %}Customer{% elif request.user.is_admin %}Admin{% endif %}</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard_author">
+                        <h4 class="px-3 py-2 mb-0 lh-2 gray fs-sm ft-medium text-muted text-uppercase text-left">Dashboard Navigation</h4>
+                        <ul class="dahs_navbar nav" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="true"><i class="lni lni-shopping-basket mr-2"></i>My Orders</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="wishlist-tab" data-toggle="tab" href="#wishlist" role="tab" aria-controls="wishlist" aria-selected="false"><i class="lni lni-heart mr-2"></i>Wishlist</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="lni lni-user mr-2"></i>Profile Info</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="addresses-tab" data-toggle="tab" href="#addresses" role="tab" aria-controls="addresses" aria-selected="false"><i class="lni lni-map-marker mr-2"></i>Addresses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false"><i class="lni lni-mastercard mr-2"></i>Payment Method</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a id="logout-link" class="nav-link" href="{% url 'accounts:logout' %}"><i class="lni lni-power-switch mr-2"></i>Log Out</a>
+                            </li>                            
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-8 col-xl-8 text-center">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        {% include 'includes/sections/order_history.html' %}
+                    </div>
+                    
+                    <!-- <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                    </div> -->
+                    
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        {% include 'includes/sections/profile.html' %}
+                    </div>
+                    
+                    <!-- <div class="tab-pane fade" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
+                    </div> -->
+                    
+                    <!-- <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ======================= Dashboard Detail End ======================== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var logoutLink = document.getElementById('logout-link');
+
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default action (navigation)
+                var userConfirmed = confirm("Are you sure you want to log out?");
+                if (userConfirmed) {
+                    window.location.href = this.href; // Navigate to the logout URL if the user confirms
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

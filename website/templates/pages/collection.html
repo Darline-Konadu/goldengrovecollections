@@ -1,0 +1,184 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} Collections {% endblock title %}
+{% block content %}
+  <!-- ======================= Shop Style 1 ======================== -->
+<section class="gray">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3 text-center">
+                <h1 class="ft-medium mb-3">Shop Categories</h1>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+                <div class="row">
+                    {% for category in categories %}
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-4">
+                        <div class="cats_side_wrap text-center m-auto">
+                            <div class="sl_cat_01">
+                                <div class="d-inline-flex align-items-center justify-content-center p-3 circle mb-2 bg-white"><a href="{% url 'website:collection' %}?category_name={{category.name}}" class="d-block"><img src="{% if category.name == 'Women' %}{% static 'website/assets/img/fashion.png' %}{% else %}{% static 'website/assets/img/tshirt.png' %}{% endif %}" class="img-fluid" width="40" alt="" /></a></div>
+                            </div>
+                            <div class="sl_cat_02">
+                                <h6 class="m-0 ft-medium fs-sm"><a href="{% url 'website:collection' %}?category_name={{category.name}}">{{category.name}}'s Wear</a></h6>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ======================= Shop Style 1 ======================== -->
+
+
+<!-- ======================= Filter Wrap Style 1 ======================== -->
+<section class="py-2 br-bottom br-top">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'website:home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Collections</a></li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-7 col-sm-12">
+                <div class="filter_wraps elspo_wrap d-flex align-items-center justify-content-end">
+                    <div class="single_fitres mr-2 br-right">
+                        <select id="sortSelect" class="custom-select simple" name="sort_by">
+                            <option value="">Default Sorting</option>
+                            <option value="price_low_to_high">Sort by price: Low price</option>
+                            <option value="price_high_to_low">Sort by price: High price</option>
+                            <option value="newest_first">Sort by newest</option>
+                            <option value="oldest_first">Sort by oldest</option>
+                        </select>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- ============================= Filter Wrap ============================== -->
+
+
+<!-- ======================= All Product List ======================== -->
+{% if products %}
+<section class="middle">
+    <div class="container">
+        <!-- row -->
+        <div class="row align-items-center rows-products">
+            <!-- Single -->
+            {% for product in products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                <div class="product_grid card b-0">
+                    <div class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">{{ product.tag }}</div>
+                    <div class="card-body p-0">
+                        <div class="shop_thumb position-relative">
+                            <a class="card-img-top d-block overflow-hidden" href="{% url 'website:product_details' product.id %}"><img class="card-img-top" src="{{ product.get_image }}" alt="..."></a>
+                            <div class="product-hover-overlay bg-dark d-flex align-items-center justify-content-center">
+                                <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview_{{ product.id }}" class="text-white fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer b-0 p-3 pb-0 d-flex align-items-start justify-content-center">
+                        <div class="text-left">
+                            <div class="text-center">
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="{% url 'website:product_details' product.id %}">{{ product.name }}</a></h5>
+                                <div class="elis_rty"><span class="ft-bold fs-md text-dark">GHC {{ product.regular_price }}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- row -->
+
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in products.paginator.page_range %}
+                        {% if products.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                        {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        
+                        {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="middle">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 text-center">
+                <div class="alert alert-warning" role="alert">
+                    No products found
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sortSelect = document.getElementById('sortSelect');
+
+        sortSelect.addEventListener('change', function() {
+            const sortBy = this.value;
+            const category_id = new URLSearchParams(window.location.search).get('category_id');
+
+            let url = new URL(window.location.href);
+            url.searchParams.set('sort_by', sortBy);
+            if (category_id) {
+                url.searchParams.set('category_id', category_id);
+            }
+
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const productsContainer = document.querySelector('.rows-products');
+                const newProductsContainer = doc.querySelector('.rows-products');
+                productsContainer.innerHTML = newProductsContainer.innerHTML;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+
+<!-- ======================= All Product List ======================== -->
+{% endblock content %}

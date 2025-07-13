@@ -1,0 +1,52 @@
+<!-- Cart -->
+<div class="w3-ch-sideBar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="Cart">
+    <div class="rightMenu-scroll">
+        <div class="d-flex align-items-center justify-content-between slide-head py-3 px-3">
+            <h4 class="cart_heading fs-md ft-medium mb-0">Products List</h4>
+            <button onclick="closeCart()" class="close_slide"><i class="ti-close"></i></button>
+        </div>
+        <div class="right-ch-sideBar">
+
+            {% if my_cart %}
+            <div class="cart_select_items py-2">
+                {% for item in my_cart %}
+                <!-- Single Item -->
+                <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
+                    <div class="cart_single d-flex align-items-center">
+                        <div class="cart_selected_single_thumb">
+                            <a href="{% url 'website:product_details' item.product.id %}"><img src="{{item.product.get_image}}" width="60" class="img-fluid" alt="" /></a>
+                        </div>
+                        <div class="cart_single_caption pl-2">
+                            <h4 class="product_title fs-sm ft-medium mb-0 lh-1">{{item.product.name}}</h4>
+                            <p class="mb-2"><span class="text-dark ft-medium small">{{item.size}}</span>, <span class="text-dark small">{{item.color}}</span></p>
+                            <h4 class="fs-md ft-medium mb-0 lh-1">GHC {{item.get_total}}</h4>
+                        </div>
+                    </div>
+                    <div class="fls_last"><a href="{% url 'website:remove_item' item.id %}" class="close_slide gray"><i class="ti-close"></i></a></div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between br-top br-bottom px-3 py-3">
+                <h6 class="mb-0">Subtotal</h6>
+                <h3 class="mb-0 ft-medium">GHC {{cart_sub_total}}</h3>
+            </div>
+
+            <div class="cart_action px-3 py-3">
+                <div class="form-group">
+                    <a href="{% url 'website:checkout' %}" class="btn d-block full-width btn-dark">Checkout Now</a>
+                </div>
+                <div class="form-group">
+                    <a href="{% url 'website:my-cart' %}" class="btn d-block full-width btn-dark-light">Edit or View</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="cart_select_items py-2 text-center">
+                <p>Your cart is empty. Please add some items to your cart.</p>
+                <a href="{% url 'website:collection' %}" class="btn btn-dark">Shop Now</a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>

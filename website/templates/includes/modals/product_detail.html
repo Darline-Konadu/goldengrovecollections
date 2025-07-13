@@ -1,0 +1,112 @@
+{% load static %}
+{% for product in products %}
+<!-- Product View Modal -->
+<div class="modal fade lg-modal" id="quickview_{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="quickview_{{product.id}}modal" aria-hidden="true">
+    <div class="modal-dialog modal-xl login-pop-form" role="document">
+        <div class="modal-content" id="quickview_{{product.id}}modal">
+            <div class="modal-headers">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span class="ti-close"></span>
+                    </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="quick_view_wrap">
+
+                    <div class="quick_view_thmb">
+                        <!-- <div class="quick_view_slide"> -->
+                            <div class="single_view_slide"><img src="{{product.get_image}}" class="img-fluid" alt="" /></div>
+                        <!-- </div> -->
+                    </div>
+
+                    <div class="quick_view_capt">
+                        <div class="prd_details">
+
+                            <div class="prt_01 mb-1"><span class="text-light bg-info rounded px-2 py-1">{{product.tag}}</span></div>
+                            <div class="prt_02 mb-2">
+                                <h2 class="ft-bold mb-1">{{product.name}}</h2>
+                                <div class="text-left">
+                                    <div class="elis_rty"><span class="ft-bold theme-cl fs-lg mr-2">GHC {{product.regular_price}}</span><span class="ft-regular py-1 px-2 fs-sm text-{% if product.stock_status == 'In Stock' %}success{% else %}danger{% endif %} bg-light-{% if product.stock_status == 'In Stock' %}success{% else %}danger{% endif %} rounded"><i class="fas fa-circle"></i>
+                                        {{product.stock_status}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prt_03 mb-5">
+                                <p>
+                                    {{product.description| safe }}
+                                </p>
+                            </div>
+                            <form action="{% url 'website:add_to_cart' %}" method="post">
+                                {% csrf_token %}
+                                <div class="prt_04 mb-2">
+                                    <p class="d-flex align-items-center mb-0 text-dark ft-medium">Color:</p>
+                                    <div class="text-left">
+                                        {% for color in product.colors.all %}
+                                            <div class="form-check size-option form-option form-check-inline mb-2">
+                                                <input class="form-check-input" type="radio" name="color" id="{{color.name}}" value="{{color.name}}" checked="">
+                                                <label class="form-option-label" for="{{color.name}}">{{color.name}}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="prt_04 mb-4">
+                                    <p class="d-flex align-items-center mb-0 text-dark ft-medium">Size:</p>
+                                    <div class="text-left pb-0 pt-2">
+                                        {% for size in product.sizes.all %}
+                                            <div class="form-check size-option form-option form-check-inline mb-2">
+                                                <input class="form-check-input" type="radio" name="size" id="{{size.name}}" value="{{size.name}}" checked="">
+                                                <label class="form-option-label" for="{{size.name}}">{{size.name}}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                        
+                                </div>
+
+                                <div class="prt_05 mb-4 mt-50">
+                                    <div class="form-row mb-7">
+                                        <div class="col-12 col-lg-auto">
+                                            <select class="mb-2 custom-select" name="quantity">
+                                                <option value="1" selected="">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-lg">
+                                            <!-- Submit -->
+                                            <input type="hidden" name="product_id" value="{{product.id}}">
+                                            <button type="submit" class="btn btn-block custom-height bg-dark mb-2">
+                                                    <i class="lni lni-shopping-basket mr-2"></i>Add to Cart 
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="prt_06">
+                                <p class="mb-0 d-flex align-items-center">
+                                    <span class="mr-4">Share:</span>
+                                    <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted mr-2" href="#!">
+                                        <i class="fab fa-twitter position-absolute"></i>
+                                      </a>
+                                    <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted mr-2" href="#!">
+                                        <i class="fab fa-facebook-f position-absolute"></i>
+                                      </a>
+                                    <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted" href="#!">
+                                        <i class="fab fa-pinterest-p position-absolute"></i>
+                                      </a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+    

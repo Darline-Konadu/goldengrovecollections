@@ -1,0 +1,20 @@
+{% load static %}
+<section class="p-0">
+    <div class="container">
+        <div class="row overlio">
+            {% for category in categories %}
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                <div class="cats_caption_wrap">
+                    <div class="cats_caption_thumb mb-2">
+                        <a href="{% url 'website:collection' %}?category_name={{category.name}}" class="d-block"><img src="{{category.get_image}}" class="img-fluid rounded" alt="" /></a>
+                    </div>
+                    <div class="cats_caption text-center">
+                        <h4 class="m-0">{{category.name}}</h4>
+                        <span class="text-muted">{{category.get_product_count}} Collections</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

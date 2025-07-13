@@ -1,0 +1,60 @@
+<div class="row card align-items-center">
+    <form action="{% url 'website:profile_update' %}" method="post" class="row m-0">
+        {% csrf_token %}
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">First Name</label>
+                <input type="text" class="form-control" value="{{ user.first_name }}" name="fname"/>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">Last Name</label>
+                <input type="text" class="form-control" value="{{ user.last_name }}" name="lname"/>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">Email</label>
+                <input type="text" class="form-control" value="{{ user.email }}" disabled name="email"/>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">Phone Number</label>
+                <input type="text" class="form-control" value="{{ user.phone_number }}" name="phone_number"/>
+            </div>
+        </div>
+        <p class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-danger">
+            You can change your password here. Please enter your current password and
+            enter your new password twice to confirm.
+        </p>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">Current Password</label>
+                <input type="password" class="form-control" name="current_password"/>
+            </div>
+        </div>
+        
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">New Password</label>
+                <input type="password" class="form-control" name="password"/>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="form-group">
+                <label class="small text-dark ft-medium">Confirm New Password</label>
+                <input type="password" class="form-control" name="confirm_password"/>
+            </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-dark">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>

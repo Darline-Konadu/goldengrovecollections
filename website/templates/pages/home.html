@@ -1,0 +1,8 @@
+{% extends "base/base.html" %}
+{% block title %} Home {% endblock title %}
+{% block content %}
+{% include 'includes/banner.html' %}
+  {% include 'includes/sections/category.html' %}
+  {% include 'includes/sections/products.html' %}
+  {% include 'includes/sections/deals.html' %}
+{% endblock content %}

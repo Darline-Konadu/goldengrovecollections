@@ -1,0 +1,133 @@
+{% extends "base/base.html" %}
+{% block title %}My Cart{% endblock title %}
+{% load static %}
+{% block content %}
+<!-- ======================= Product Detail ======================== -->
+<section class="middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="text-center d-block mb-5">
+                    <h2>Shopping Cart</h2>
+                </div>
+            </div>
+        </div>
+    
+        {% if my_cart %}
+        <div class="row justify-content-between">
+            <div class="col-12 col-lg-7 col-md-12">
+                <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x mb-4">
+                    {% for item in my_cart %}
+                    <li class="list-group-item">
+                        <li class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-3">
+                                    <!-- Image -->
+                                    <a href="{% url 'website:product_details' item.product.id %}"><img src="{{item.product.get_image}}" alt="..." class="img-fluid"></a>
+                                </div>
+                                <div class="col d-flex align-items-center justify-content-between">
+                                    <div class="cart_single_caption pl-2">
+                                        <h4 class="product_title fs-md ft-medium mb-1 lh-1">{{item.product.name}}</h4>
+                                        <p class="mb-1 lh-1"><span class="text-dark">Size: {{item.size}}</span></p>
+                                        <p class="mb-3 lh-1"><span class="text-dark">Color: {{item.color}}</span></p>
+                                        <h4 class="fs-md ft-medium mb-3 lh-1 product-total">GHC {{item.get_total}}</h4>
+                                        <input type="number" class="form-control quantity-input" value="{{item.quantity}}" min="1" onchange="updateQuantity({{item.id}}, this.value)">
+                                    </div>
+                                    <div class="fls_last"><a href="{% url 'website:remove_item' item.id %}" class="close_slide gray"><i class="ti-close"></i></a></div>
+                                </div>
+                            </div>
+                        </li>
+                    </li>
+                    {% endfor %}
+                </ul>
+    
+                <div class="row align-items-end justify-content-between mb-10 mb-md-0">
+                    <!-- Your existing coupon code -->
+                </div>
+            </div>
+    
+            <div class="col-12 col-md-12 col-lg-4">
+                <div class="card mb-4 gray mfliud">
+                    <div class="card-body">
+                        <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+                            <li class="list-group-item d-flex text-dark fs-sm ft-regular">
+                                <span>Subtotal</span> <span class="ml-auto text-dark ft-medium">GHC {{cart_sub_total}}</span>
+                            </li>
+                            <li class="list-group-item d-flex text-dark fs-sm ft-regular">
+                                <span>Shipping Fee</span> <span class="ml-auto text-dark ft-medium">To be calculated</span>
+                            </li>
+                            <li class="list-group-item d-flex text-dark fs-sm ft-regular">
+                                <span>Total</span> <span class="ml-auto text-dark ft-medium">GHC {{cart_sub_total}}</span>
+                            </li>
+                            <li class="list-group-item fs-sm text-center">
+                                Shipping cost calculated at Checkout *
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <a class="btn btn-block btn-dark mb-3" href="{% url 'website:checkout' %}">Proceed to Checkout</a>
+    
+                <a class="btn-link text-dark ft-medium" href="{% url 'website:collection' %}">
+                    <i class="ti-back-left mr-2"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-7 col-md-12 text-center">
+                <h3>Your cart is empty</h3>
+                <p>Looks like you haven't added any items to your cart yet. Let's change that!</p>
+                <a class="btn btn-dark" href="{% url 'website:collection' %}">Shop Now</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                      const cookies = document.cookie.split(';');
+                      for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                        }
+                      }
+                    }
+                    return cookieValue;
+                  }
+                  
+                  const csrftoken = getCookie('csrftoken');
+                  
+                  function updateQuantity(orderItemId, newQuantity) {
+                    console.log(newQuantity);
+                  
+                    fetch(`/my-cart/update_quantity/${orderItemId}/`, {
+                      method: 'POST',
+                      headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                      body: new URLSearchParams({ new_quantity: newQuantity }).toString(),
+                    })
+                      .then(response => response.json())
+                      .then(data => {
+                        if (data.success) {
+                          console.log('Quantity updated successfully');
+                          location.reload();
+                        } else {
+                          console.log('Failed to update quantity:', data.error);
+                          // Handle the error case
+                        }
+                      })
+                      .catch(error => {
+                        console.log('Error updating quantity:', error);
+                        // Handle the error case
+                      });
+                  }
+    </script>
+</section>
+<!-- ======================= Product Detail End ======================== -->
+{% endblock %}

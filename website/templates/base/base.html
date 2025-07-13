@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zxx">
+{% load static %}
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Themezhub" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Adombisege's Couture -
+        {% block title %} {% endblock title %}
+    </title>
+
+    <!-- Custom CSS -->
+    <link href="{% static 'website/assets/css/styles.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+
+        <!-- ============================================================== -->
+        <!-- Top header  -->
+        <!-- ============================================================== -->
+        <!-- Start Navigation -->
+        
+        <!-- How Alerts -->
+        {% if messages %}
+        {% include 'includes/alerts.html' %}
+        {% endif %}
+            
+        <!-- Top Header -->
+        {% include 'includes/top_header.html' %}
+        {% include 'includes/header.html' %}
+
+        
+        <!-- End Navigation -->
+        <div class="clearfix"></div>
+        <!-- ============================================================== -->
+        <!-- Top header  -->
+        <!-- ============================================================== -->
+
+        {% block content %}
+          
+        {% endblock content %}
+
+        <!-- ============================ Footer Start ================================== -->
+        
+        {% include 'includes/footer.html' %}
+        <!-- ============================ Footer End ================================== -->
+
+        <!-- Product View Modal -->
+        {% include 'includes/modals/product_detail.html' %}
+        <!-- End Modal -->
+
+        {% include 'includes/modals/accounts.html' %}
+        {% include 'includes/modals/cart.html' %}
+
+        <!-- Search -->
+        {% include 'includes/modals/search.html' %}
+
+        <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- Start JS -->
+    {% include 'includes/scripts.html' %}
+    
+
+</body>
+
+</html>
